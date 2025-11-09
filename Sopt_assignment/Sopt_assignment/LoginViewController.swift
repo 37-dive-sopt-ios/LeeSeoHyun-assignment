@@ -5,133 +5,137 @@
 //  Created by 이서현 on 10/25/25.
 //
 
-//TODO: - stackView, func(eye) letterSpacing
-import Foundation
-import UIKit
-import SnapKit
+//FIXME: - stackview 공부하기
+//FIXME: - extension 왜 쓰는 거야
+//FIXME: - 텍스트필드를 컴포넌트화해보기
+//FIXME: - ViewController 지우기
 
-class LoginViewController: UIViewController {
+
+
+
+import UIKit
+
+import SnapKit
+import Then
+
+final class LoginViewController: UIViewController {
     
+    private let topBarLabel = UILabel()
+    lazy var backButton = UIImageView() // fix. 접근제어 어떻게 할까
+    lazy var idTextField = UITextField()
+    lazy var passwordTextField = UITextField()
+    lazy var eyeButton = UIButton()
+    lazy var xPWButton = UIButton()
+    lazy var loginButton = UIButton()
+    lazy var findButton = UIButton()
     
-    lazy var topBarLabel: UILabel = {
-        let label = UILabel()
-        label.text = "이메일 또는 아이디로 계속"
-        label.font = UIFont.title_sb_18
+    func setStyle() {
+        topBarLabel.do {
+            $0.text = "이메일 또는 아이디로 계속"
+            $0.font = .title_sb_18
+        }
         
-        return label
-    }()
-    
-    private let backButton: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "arrow.left")
-        imageView.tintColor = UIColor.black
-        imageView.isUserInteractionEnabled = true //default는 false
-        return imageView
-    }()
-    
-    lazy var idTextField: UITextField = {
-        let idTextField = UITextField()
-        idTextField.placeholder = "이메일 아이디"
-        idTextField.textColor = UIColor.baeminGray700
-        idTextField.font = UIFont.body_r_14
-        idTextField.borderStyle = .none
-        idTextField.layer.borderColor = UIColor(named: "baemin_gray_200")?.cgColor
-        idTextField.layer.borderWidth = 1
-        idTextField.layer.cornerRadius = 4
-        idTextField.addLeftPadding()
-        idTextField.addRightPadding()
-        return idTextField
-    }()
-    
-    lazy var passwordTextField: UITextField = {
-        let pwTextField = UITextField()
-        pwTextField.placeholder = "비밀번호"
-        pwTextField.textColor = UIColor.baeminGray700
-        pwTextField.font = UIFont.body_r_14
-        pwTextField.borderStyle = .none
-        pwTextField.layer.borderColor = UIColor(named: "baemin_gray_200")?.cgColor
-        pwTextField.layer.borderWidth = 1
-        pwTextField.layer.cornerRadius = 4
-        pwTextField.addLeftPadding()
-        pwTextField.addRightPadding()
-        pwTextField.isSecureTextEntry = true
-        return pwTextField
-    }()
-    
-    lazy var eyeButton: UIButton = {
-        let button = UIButton(type: .system) //system q.
-        let image = UIImage(named: "eyeButton")?.withRenderingMode(.alwaysTemplate) // q.
-        button.setImage(image, for: .normal)
-        button.tintColor = .baeminGray700
-        button.addTarget(self, action: #selector(isSecure), for: .touchUpInside)
-        return button
-    }()
-    
-    
-    @objc
-    lazy var xIDButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "cancle"), for: .normal)
-        button.addTarget(self, action: #selector(clearIDField), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc
-    lazy var xPWButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "cancle"), for: .normal)
-        button.addTarget(self, action: #selector(clearPWField), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var loginButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 343, height: 46))
-        button.setTitle("로그인", for: .normal)
-        button.titleLabel?.font = UIFont.head_b_18
-        button.backgroundColor = UIColor(named: "baemin_gray_200")
-        button.setTitleColor(.baeminWhite, for: .normal)
-        button.layer.cornerRadius = 4
-        button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
-        return button
-    }()
-    
-    lazy var findButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 343, height: 46))
-        button.setTitle("계정 찾기 >", for: .normal)
-        button.titleLabel?.font = UIFont.body_r_14
-        button.backgroundColor = UIColor(named: "baemin_white")
-        button.setTitleColor(.baeminBlack, for: .normal)
-        button.layer.cornerRadius = 4
-        //button.addTarget(self, action: #selector(기능추가), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc
-    private func isSecure() {
-        passwordTextField.isSecureTextEntry.toggle()
-        eyeButton.tintColor = passwordTextField.isSecureTextEntry ? .baeminBlack : .baeminGray700
+        backButton.do {
+            $0.image = UIImage(systemName: "arrow.left")
+            $0.tintColor = UIColor.black
+            $0.isUserInteractionEnabled = true
+        }
+        
+        idTextField.do {
+            $0.placeholder = "이메일 아이디"
+            $0.textColor = .baeminGray700
+            $0.font = .body_r_14
+            $0.borderStyle = .none
+            $0.layer.borderColor = UIColor(named: "baemin_gray_200")?.cgColor
+            $0.layer.borderWidth = 1
+            $0.layer.cornerRadius = 4
+            $0.addLeftPadding()
+            $0.addRightPadding()
+        }
+        
+        passwordTextField.do {
+            $0.placeholder = "비밀번호"
+            $0.textColor = .baeminGray700
+            $0.font = .body_r_14
+            $0.borderStyle = .none
+            $0.layer.borderColor = UIColor(named: "baemin_gray_200")?.cgColor
+            $0.layer.borderWidth = 1
+            $0.layer.cornerRadius = 4
+            $0.addLeftPadding()
+            $0.addRightPadding()
+            $0.isSecureTextEntry = true
+        }
+        
+        eyeButton.do {
+            $0.tintColor = .baeminGray700
+            $0.setImage(UIImage(systemName: "eye.slash.fill"), for: .normal)
+            $0.isHidden = true
+        }
+        
+        xPWButton.do {
+            $0.setImage(UIImage(named: "cancle"), for: .normal)
+            $0.isHidden = true
+        }
+        
+        loginButton.do {
+            $0.setTitle("로그인", for: .normal)
+            $0.titleLabel?.font = UIFont.head_b_18
+            $0.backgroundColor = UIColor(named: "baemin_gray_200")
+            $0.setTitleColor(.baeminWhite, for: .normal)
+            $0.layer.cornerRadius = 4
+        }
+        
+        /// UI만 구현한 상태 (action은 나중에 구현)
+        findButton.do {
+            $0.setTitle("계정 찾기 >", for: .normal)
+            $0.titleLabel?.font = UIFont.body_r_14
+            $0.backgroundColor = UIColor(named: "baemin_white")
+            $0.setTitleColor(.baeminBlack, for: .normal)
+            $0.layer.cornerRadius = 4
+        }
     }
     
+    
     @objc
-    private func clearIDField() {
-        idTextField.text = ""
+    private func toggleEyeButtonDidTap() {
+        passwordTextField.isSecureTextEntry.toggle()
+        
+        let isSecure = passwordTextField.isSecureTextEntry
+        let image = passwordTextField.isSecureTextEntry ?
+            UIImage(systemName: "eye.slash.fill") : UIImage(systemName: "eye.fill")
     }
     
     @objc
     private func clearPWField() {
         passwordTextField.text = ""
+        updateTrailingPWDButtons()
     }
     
     @objc
     private func textFieldDidChange(_ textField: UITextField) {
-        if textField == idTextField {
-            xIDButton.isHidden = !textField.hasText  // 입력 있으면 x버튼 띄우기
-        } else if textField == passwordTextField {
+        
+        makeButtonEnable()
+        
+        if textField == passwordTextField {
             xPWButton.isHidden = !textField.hasText
             eyeButton.isHidden = !textField.hasText
         }
     }
-
+    
+    private func makeButtonEnable() {
+        let isPasswordFieldEmpty = passwordTextField.text?.isEmpty ?? true
+        let isIDFieldEmpty = idTextField.text?.isEmpty ?? true
+        let shouldEnable = !isPasswordFieldEmpty && !isIDFieldEmpty
+        
+        if shouldEnable {
+            loginButton.isEnabled = true
+            loginButton.backgroundColor = UIColor(named: "baemin_mint_500")
+        } else {
+            loginButton.isEnabled = false
+            loginButton.backgroundColor = UIColor(named: "baemin_gray_200")
+        }
+    }
+    
     @objc
     private func loginButtonDidTap() {
         presentToWelcomeVC()
@@ -143,35 +147,35 @@ class LoginViewController: UIViewController {
         self.navigationController?.pushViewController(wcViewController, animated: true)
     }
     
+    private func updateTrailingPWDButtons() {
+        let isEmpty = passwordTextField.text?.isEmpty ?? true
+        eyeButton.isHidden = isEmpty
+        xPWButton.isHidden = isEmpty
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setHierarchy()
         setLayout()
-        
-        
-        idTextField.delegate = self
-        passwordTextField.delegate = self
-        ///UITextField가 어떤 이벤트가 생기면 처리를 LoginViewController가 함
+        setStyle()
+        setAddTarget()
+        setDelegate()
         
         loginButton.isEnabled = false
     }
     
+    /// WelcomeView에서 뒤로가기 눌렀을 때 뷰 초기화
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         idTextField.text = ""
         passwordTextField.text = ""
+        
+        makeButtonEnable()
     }
     
     private func setUI() {
         view.backgroundColor = .white
-        
-        xIDButton.isHidden = true
-        xPWButton.isHidden = true
-        eyeButton.isHidden = true
-        
-        idTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
     
     private func setHierarchy() {
@@ -186,10 +190,10 @@ class LoginViewController: UIViewController {
     }
     
     private func setLayout() {
-        [topBarLabel, backButton, idTextField, xIDButton, passwordTextField, xPWButton, eyeButton, loginButton, findButton].forEach {
+        [topBarLabel, backButton, idTextField, passwordTextField, xPWButton, eyeButton, loginButton, findButton].forEach {
             self.view.addSubview($0)
         }
-        
+
         topBarLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().offset(80)
@@ -207,11 +211,6 @@ class LoginViewController: UIViewController {
             $0.top.equalTo(topBarLabel.snp.bottom).offset(36)
             $0.width.equalTo(375)
             $0.height.equalTo(46)
-        }
-        
-        xIDButton.snp.makeConstraints {
-            $0.top.equalTo(idTextField.snp.top).offset(12)
-            $0.trailing.equalTo(idTextField.snp.trailing).offset(-20)
         }
         
         passwordTextField.snp.makeConstraints {
@@ -246,24 +245,48 @@ class LoginViewController: UIViewController {
         }
         
     }
+    
+    //MARK: - AddTarget
+
+    private func setAddTarget() {
+        eyeButton.addTarget(self, action: #selector(toggleEyeButtonDidTap), for: .touchUpInside)
+        xPWButton.addTarget(self, action: #selector(clearPWField), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
+        idTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+    }
+    
+    
+    //MARK: - setDelegate
+    
+    private func setDelegate() {
+        idTextField.delegate = self
+        passwordTextField.delegate = self
+        ///UITextField가 어떤 이벤트가 생기면 처리를 LoginViewController가 함
+    }
+    
 }
+
+//MARK: - UITextFieldDelegate extension
 
 extension LoginViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.layer.borderColor = UIColor(named: "baemin_black")?.cgColor ?? UIColor(named: "baemin_gray_200")?.cgColor
-        
-        if idTextField.hasText && passwordTextField.hasText {
-            loginButton.isEnabled = true
-            loginButton.backgroundColor = UIColor(named: "baemin_mint_500") ?? UIColor(named: "baemin_gray_200")
-        }
+        textField.layer.borderWidth = 2
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderColor = UIColor(named: "baemin_gray_200")?.cgColor
+        textField.layer.borderWidth = 1
     }
-}
-
-#Preview {
-    LoginViewController()
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        makeButtonEnable()
+        
+        if textField == passwordTextField {
+            updateTrailingPWDButtons()
+        }
+    }
 }

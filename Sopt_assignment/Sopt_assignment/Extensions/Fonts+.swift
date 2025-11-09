@@ -10,7 +10,6 @@ import UIKit
 
 extension UIFont {
     class var head_b_24: UIFont {
-
         return UIFont(name: "Pretendard-Bold", size: 24)!
     }
     

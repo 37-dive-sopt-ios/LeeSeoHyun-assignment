@@ -5,8 +5,8 @@
 //  Created by 이서현 on 10/25/25.
 //
 
-import Foundation
 import UIKit
+
 import SnapKit
 
 final class WelcomeViewController: UIViewController {
@@ -151,9 +151,3 @@ final class WelcomeViewController: UIViewController {
         
     }
 }
-
-#Preview {
-    WelcomeViewController()
-}
-
-
