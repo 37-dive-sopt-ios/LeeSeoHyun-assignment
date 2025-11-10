@@ -5,14 +5,6 @@
 //  Created by 이서현 on 10/25/25.
 //
 
-//FIXME: - stackview 공부하기
-//FIXME: - extension 왜 쓰는 거야
-//FIXME: - 텍스트필드를 컴포넌트화해보기
-//FIXME: - ViewController 지우기
-
-
-
-
 import UIKit
 
 import SnapKit
