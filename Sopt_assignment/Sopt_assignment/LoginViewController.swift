@@ -145,6 +145,8 @@ final class LoginViewController: UIViewController {
         xPWButton.isHidden = isEmpty
     }
     
+    //MARK: - lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()

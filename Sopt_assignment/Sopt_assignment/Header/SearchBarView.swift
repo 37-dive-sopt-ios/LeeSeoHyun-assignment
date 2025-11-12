@@ -49,13 +49,15 @@ final class SearchBarView: UIView {
     }
     
     private func setLayout() {
-        [searchBar, searchButton].forEach {
-            addSubview($0)
-        }
+        addSubviews(
+            searchBar,
+            searchButton
+        )
         
         searchBar.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(17)
-            $0.width.equalTo(343) //maxWidth 같은 거 없나?
+            $0.top.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.width.equalTo(350)
             $0.height.equalTo(40)
         }
         

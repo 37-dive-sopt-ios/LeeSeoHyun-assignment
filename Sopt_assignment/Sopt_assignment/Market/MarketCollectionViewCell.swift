@@ -28,7 +28,7 @@ final class MarketCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 8
+        imageView.layer.cornerRadius = 20
         imageView.backgroundColor = .baeminGray300
         return imageView
     }()
@@ -50,6 +50,7 @@ final class MarketCollectionViewCell: UICollectionViewCell {
         setHierarchy()
         setLayout()
         setAddTarget()
+        contentView.backgroundColor = .systemYellow
     }
     
     required init?(coder: NSCoder) {
@@ -73,6 +74,7 @@ final class MarketCollectionViewCell: UICollectionViewCell {
         marketImageView.snp.makeConstraints {
             $0.size.equalTo(58)
             $0.top.equalTo(contentView).offset(12)
+            $0.centerX.equalToSuperview()     
         }
         
         marketLabel.snp.makeConstraints {
