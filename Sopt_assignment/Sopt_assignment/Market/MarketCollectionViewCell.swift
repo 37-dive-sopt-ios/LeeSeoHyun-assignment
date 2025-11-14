@@ -50,7 +50,6 @@ final class MarketCollectionViewCell: UICollectionViewCell {
         setHierarchy()
         setLayout()
         setAddTarget()
-        contentView.backgroundColor = .systemYellow
     }
     
     required init?(coder: NSCoder) {

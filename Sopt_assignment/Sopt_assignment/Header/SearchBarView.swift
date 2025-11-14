@@ -22,6 +22,7 @@ final class SearchBarView: UIView {
         super.init(frame: frame)
         setStyle()
         setLayout()
+        backgroundColor = .white
     }
     
     @available(*, unavailable)
@@ -38,6 +39,7 @@ final class SearchBarView: UIView {
             $0.layer.borderColor = UIColor.baeminGray700.cgColor
             $0.layer.borderWidth = 1
             $0.layer.cornerRadius = 18
+            $0.backgroundColor = .baeminWhite
             $0.addLeftPadding()
             $0.addRightPadding()
         }
@@ -56,9 +58,8 @@ final class SearchBarView: UIView {
         
         searchBar.snp.makeConstraints {
             $0.top.bottom.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
-            $0.width.equalTo(350)
-            $0.height.equalTo(40)
+            $0.edges.equalToSuperview().inset(16)
+            $0.height.equalTo(45)
         }
         
         searchButton.snp.makeConstraints {

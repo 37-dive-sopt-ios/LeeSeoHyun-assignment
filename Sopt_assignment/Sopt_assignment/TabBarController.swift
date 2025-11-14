@@ -16,6 +16,10 @@ final class TabBarController: UITabBarController {
         setTabBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
     private func setTabBar() {
         
         view.backgroundColor = .baeminWhite

@@ -13,7 +13,7 @@ import Then
 final class LoginViewController: UIViewController {
     
     private let topBarLabel = UILabel()
-    lazy var backButton = UIImageView() // fix. 접근제어 어떻게 할까
+    lazy var backButton = UIImageView() 
     lazy var idTextField = UITextField()
     lazy var passwordTextField = UITextField()
     lazy var eyeButton = UIButton()

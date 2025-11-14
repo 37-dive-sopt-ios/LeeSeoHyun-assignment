@@ -94,7 +94,7 @@ final class RankingCollectionViewCell: UICollectionViewCell {
     private let leastPriceLabel: UILabel = {
         let label = UILabel()
         label.font = .head_b_13
-        label.textColor = .baeminGray600
+        label.textColor = .baeminPurple
         return label
     }()
     
@@ -143,6 +143,7 @@ final class RankingCollectionViewCell: UICollectionViewCell {
         foodImageView.snp.makeConstraints {
             $0.size.equalTo(145)
             $0.top.equalTo(contentView).offset(12)
+            $0.leading.equalToSuperview()
         }
         
         storeNameLabel.snp.makeConstraints {
@@ -152,19 +153,20 @@ final class RankingCollectionViewCell: UICollectionViewCell {
         }
         
         starImageView.snp.makeConstraints {
-            $0.top.equalTo(storeNameLabel)
+            //$0.top.equalTo(storeNameLabel)
+            $0.centerY.equalTo(storeNameLabel)
             $0.trailing.equalTo(scoreLabel.snp.leading).offset(-4)
             $0.width.equalTo(11)
             $0.height.equalTo(10)
         }
         
         scoreLabel.snp.makeConstraints {
-            $0.top.equalTo(storeNameLabel)
+            $0.centerY.equalTo(storeNameLabel)
             $0.trailing.equalTo(reviewCountLabel.snp.leading).offset(-4)
         }
         
         reviewCountLabel.snp.makeConstraints {
-            $0.top.equalTo(storeNameLabel)
+            $0.centerY.equalTo(storeNameLabel)
             $0.trailing.equalTo(foodImageView.snp.trailing)
         }
         
@@ -180,7 +182,7 @@ final class RankingCollectionViewCell: UICollectionViewCell {
         }
         
         priceLabel.snp.makeConstraints {
-            $0.top.equalTo(discountLabel)
+            $0.centerY.equalTo(discountLabel.snp.centerY)
             $0.leading.equalTo(discountLabel.snp.trailing).offset(6)
         }
         
@@ -192,7 +194,8 @@ final class RankingCollectionViewCell: UICollectionViewCell {
         leastPriceLabel.snp.makeConstraints {
             $0.top.equalTo(notPriceLabel.snp.bottom).offset(6)
             $0.leading.equalTo(storeNameLabel)
-            $0.bottom.equalToSuperview().inset(12)
+            $0.bottom.equalToSuperview()
+            
         }
     }
     
@@ -221,7 +224,14 @@ final class RankingCollectionViewCell: UICollectionViewCell {
         menuNameLabel.text = rank.menuName
         discountLabel.text = rank.discountPercent
         priceLabel.text = rank.price
-        notPriceLabel.text = rank.notPrice
+        let notPriceAttr = NSAttributedString(
+            string: rank.notPrice,
+            attributes: [
+                .strikethroughStyle: NSUnderlineStyle.single.rawValue,
+                .foregroundColor: UIColor.baeminGray600
+            ]
+        )
+        notPriceLabel.attributedText = notPriceAttr
         leastPriceLabel.text = rank.leastPrice
     }
 }

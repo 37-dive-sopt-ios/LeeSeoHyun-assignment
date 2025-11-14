@@ -8,6 +8,7 @@
 import Foundation
 
 import UIKit
+
 import SnapKit
 import Then
 
@@ -37,7 +38,7 @@ final class BmartEventView: UIView {
             $0.configuration?.attributedTitle?.font = .head_b_16
             $0.configuration?.baseForegroundColor = .baeminBlack
             $0.configuration?.image = UIImage(systemName: "chevron.right")
-            $0.configuration?.preferredSymbolConfigurationForImage = .init(pointSize: 8, weight: .medium) //fix
+            $0.configuration?.preferredSymbolConfigurationForImage = .init(pointSize: 8, weight: .medium)
             $0.configuration?.imagePlacement = .trailing
             $0.configuration?.imagePadding = 2
         }
@@ -53,11 +54,13 @@ final class BmartEventView: UIView {
             $0.top.leading.equalToSuperview()
             $0.width.equalTo(50)
             $0.height.equalTo(16)
+            $0.bottom.equalToSuperview()
         }
         
         bMartEventButton.snp.makeConstraints {
             $0.top.equalTo(bMartImage.snp.bottom).offset(6)
             $0.leading.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
     }
 }

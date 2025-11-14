@@ -47,8 +47,6 @@ class BaeminFeedViewController: UIViewController {
             groupEventView)
     }
 
-    //FIXME: - 레이아웃
-
     private func setLayout() {
         segmentedBar.snp.makeConstraints {
             $0.top.equalToSuperview()

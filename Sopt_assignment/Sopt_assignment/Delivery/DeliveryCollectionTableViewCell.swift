@@ -26,11 +26,13 @@ final class DeliveryCollectionTableViewCell: UITableViewCell {
         layout.sectionInset = collectionViewInset
 
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.isScrollEnabled = false               // 테이블뷰가 스크롤하니까 끔
+        cv.isScrollEnabled = false
         cv.backgroundColor = .white
         return cv
     }()
 
+    //MARK: - init
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -96,16 +98,3 @@ extension DeliveryCollectionTableViewCell: UICollectionViewDelegateFlowLayout {
 }
 
 
-//fix - main에서 이런 식으로 사용
-/*
-tableView(_:cellForRowAt:)
- guard let cell = tableView.dequeueReusableCell(
-     withIdentifier: DeliveryCollectionTableViewCell.identifier,
-     for: indexPath
- ) as? DeliveryCollectionTableViewCell else {
-     return UITableViewCell()
- }
-
- cell.configure(items: DeliveryModel.mockData)
- return cell
- */

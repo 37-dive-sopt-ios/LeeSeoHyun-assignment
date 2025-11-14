@@ -6,18 +6,19 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
 
-final class HeaderView: UIView {
+final class HeaderView: UITableViewHeaderFooterView {
+    
+    static let headerViewID = "HeaderView"
     
     private let navigationBar = NavigationBar()
-    private let searchBarView = SearchBarView()
-    private let bmartEventView = BmartEventView()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setHierarchy()
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        setupHeaderView()
         setLayout()
     }
     
@@ -26,11 +27,9 @@ final class HeaderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setHierarchy() {
+    private func setupHeaderView() {
         addSubviews(
-            navigationBar,
-            searchBarView,
-            bmartEventView
+            navigationBar
         )
     }
     
@@ -39,22 +38,8 @@ final class HeaderView: UIView {
             $0.top.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(24)
-        }
-        
-        searchBarView.snp.makeConstraints {
-            $0.top.equalTo(navigationBar.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(16)
-        }
-        
-        //fix 왜 이미지 , 버튼 왼쪽 정렬이 안 될까요..
-        bmartEventView.snp.makeConstraints {
-            $0.top.equalTo(searchBarView.snp.bottom).offset(24)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview()
         }
     }
 }
 
-#Preview {
-    HeaderView()
-    
-}

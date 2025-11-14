@@ -55,14 +55,14 @@ final class WelcomeViewController: UIViewController {
     
     private var backToLoginButton: UIButton = {
         let button = UIButton()
-        button.setTitle("뒤로가기", for: .normal)
+        button.setTitle("메인으로 가기", for: .normal)
         button.titleLabel?.font = UIFont.head_b_18
         button.backgroundColor = UIColor(named: "baemin_mint_500")
         button.setTitleColor(.baeminWhite, for: .normal)
         button.layer.cornerRadius = 4
         button.addTarget(
             self,
-            action: #selector(backToLoginButtonDidTap),
+            action: #selector(goToTabVC),
             for: .touchUpInside)
         return button
     }()
@@ -79,6 +79,12 @@ final class WelcomeViewController: UIViewController {
         } else {
             self.navigationController?.popViewController(animated: true)
         }
+    }
+    
+    @objc
+    private func goToTabVC() {
+        let tabBarViewController = TabBarController()
+        navigationController?.pushViewController(tabBarViewController, animated: true)
     }
     
     override func viewDidLoad() {
