@@ -55,7 +55,7 @@ final class ADImageTableViewCell: UITableViewCell {
         collectionView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(21)
             $0.leading.trailing.bottom.equalToSuperview()
-            $0.height.equalTo(250)     // 광고 영역 높이 (Figma에 맞춰 조절 가능)
+            $0.height.equalTo(250) 
         }
     }
 }

@@ -22,7 +22,6 @@ final class MainViewController: UIViewController {
         
         view.backgroundColor = .white
         setTableView()
-        setLayout()
     }
 
     private func setTableView() {
@@ -36,7 +35,6 @@ final class MainViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.sectionFooterHeight = 0
 
-        // 우리가 아까 한 파일에 합쳐둔 컬렉션 셀을 “담는” 테이블셀
         tableView.register(HeaderView.self, forHeaderFooterViewReuseIdentifier: HeaderView.headerViewID)
         tableView.register(
             BmartEventTableViewCell.self,
@@ -56,19 +54,13 @@ final class MainViewController: UIViewController {
         tableView.register(RankingCollectionTableViewCell.self,
                            forCellReuseIdentifier: RankingCollectionTableViewCell.identifier)
 
-
         let header = HeaderView()
         header.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 30)
         
         tableView.tableHeaderView = header
         
     }
-
-    private func setLayout() {
-        // 위에서 이미 constraints 했으니까 여기선 딱히 없음
-    }
 }
-
 
 extension MainViewController: UITableViewDelegate {
     

@@ -72,7 +72,7 @@ final class RankingCollectionTableViewCell: UITableViewCell {
         collectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(height)
-            $0.bottom.equalToSuperview()   // 셀 높이랑 맞추기
+            $0.bottom.equalToSuperview() 
         }
     }
     

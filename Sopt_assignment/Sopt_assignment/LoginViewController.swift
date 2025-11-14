@@ -77,7 +77,6 @@ final class LoginViewController: UIViewController {
             $0.layer.cornerRadius = 4
         }
         
-        /// UI만 구현한 상태 (action은 나중에 구현)
         findButton.do {
             $0.setTitle("계정 찾기 >", for: .normal)
             $0.titleLabel?.font = UIFont.body_r_14

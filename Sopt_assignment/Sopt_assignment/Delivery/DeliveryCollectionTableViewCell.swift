@@ -38,7 +38,6 @@ final class DeliveryCollectionTableViewCell: UITableViewCell {
 
         contentView.addSubview(collectionView)
 
-        // 2줄 높이 계산 (네가 VC에서 하던 거 그대로)
         let rows: CGFloat = 2
         let height =
             collectionViewInset.top +
@@ -49,7 +48,7 @@ final class DeliveryCollectionTableViewCell: UITableViewCell {
         collectionView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
             $0.height.equalTo(height)
-            $0.bottom.equalToSuperview()   // 셀 높이 잡히게
+            $0.bottom.equalToSuperview() 
         }
 
         collectionView.delegate = self

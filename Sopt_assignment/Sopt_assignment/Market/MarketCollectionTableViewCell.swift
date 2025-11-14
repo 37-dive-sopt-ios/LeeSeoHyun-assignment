@@ -13,7 +13,7 @@ final class MarketCollectionTableViewCell: UITableViewCell {
     static let identifier = "MarketCollectionTableViewCell"
     
     private let lineSpacing: CGFloat = 13
-    private let itemSpacing: CGFloat = 13 //얜 horizontal이면 필요x?
+    private let itemSpacing: CGFloat = 13 
     private let cellHeight: CGFloat = 90
     private let collectionViewInset: UIEdgeInsets = .init(top: 0, left: 10, bottom: 0, right: 10)
     

@@ -25,13 +25,13 @@ final class WelcomeViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "arrow.left")
         imageView.tintColor = UIColor.black
-        imageView.isUserInteractionEnabled = true //default는 false
+        imageView.isUserInteractionEnabled = true 
         return imageView
     }()
     
     
     private let wcImageView: UIImageView = {
-        let imageView = UIImageView() // 뷰 너비 꽉 차게 하고 싶으면?
+        let imageView = UIImageView()
         imageView.image = UIImage(named: "baemin")
         imageView.contentMode = .scaleAspectFill
         return imageView
