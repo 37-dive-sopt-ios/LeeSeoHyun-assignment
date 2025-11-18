@@ -64,7 +64,3 @@ final class BmartEventView: UIView {
         }
     }
 }
-
-#Preview {
-    BmartEventView()
-}

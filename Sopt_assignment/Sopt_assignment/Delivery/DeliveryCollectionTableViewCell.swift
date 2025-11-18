@@ -25,10 +25,10 @@ final class DeliveryCollectionTableViewCell: UITableViewCell {
         layout.minimumInteritemSpacing = itemSpacing
         layout.sectionInset = collectionViewInset
 
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.isScrollEnabled = false
-        cv.backgroundColor = .white
-        return cv
+        let collectionview = UICollectionView(frame: .zero, collectionViewLayout: layout)
+      collectionview.isScrollEnabled = false
+      collectionview.backgroundColor = .white
+        return collectionview
     }()
 
     //MARK: - init

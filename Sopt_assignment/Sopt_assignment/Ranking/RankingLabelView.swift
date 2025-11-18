@@ -86,7 +86,3 @@ final class RankingLabelView: UIView {
         }
     }
 }
-
-#Preview {
-    RankingLabelView()
-}

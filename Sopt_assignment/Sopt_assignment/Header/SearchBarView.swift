@@ -69,7 +69,3 @@ final class SearchBarView: UIView {
         }
     }
 }
-
-#Preview {
-    SearchBarView()
-}

@@ -111,8 +111,3 @@ class SegmentedControlBar: UIView {
         
     }
 }
-
-#Preview {
-    SegmentedControlBar()
-}
-

@@ -25,7 +25,7 @@ final class WelcomeViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "arrow.left")
         imageView.tintColor = UIColor.black
-        imageView.isUserInteractionEnabled = true 
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     

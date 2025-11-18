@@ -49,7 +49,3 @@ final class DeliveryPlusTableViewCell: UITableViewCell {
         }
     }
 }
-
-#Preview {
-    DeliveryPlusTableViewCell()
-}
