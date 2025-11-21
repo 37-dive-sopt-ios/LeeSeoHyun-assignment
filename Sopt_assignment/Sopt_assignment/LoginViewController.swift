@@ -5,14 +5,6 @@
 //  Created by 이서현 on 10/25/25.
 //
 
-//FIXME: - stackview 공부하기
-//FIXME: - extension 왜 쓰는 거야
-//FIXME: - 텍스트필드를 컴포넌트화해보기
-//FIXME: - ViewController 지우기
-
-
-
-
 import UIKit
 
 import SnapKit
@@ -21,7 +13,7 @@ import Then
 final class LoginViewController: UIViewController {
     
     private let topBarLabel = UILabel()
-    lazy var backButton = UIImageView() // fix. 접근제어 어떻게 할까
+    lazy var backButton = UIImageView() 
     lazy var idTextField = UITextField()
     lazy var passwordTextField = UITextField()
     lazy var eyeButton = UIButton()
@@ -85,7 +77,6 @@ final class LoginViewController: UIViewController {
             $0.layer.cornerRadius = 4
         }
         
-        /// UI만 구현한 상태 (action은 나중에 구현)
         findButton.do {
             $0.setTitle("계정 찾기 >", for: .normal)
             $0.titleLabel?.font = UIFont.body_r_14
@@ -153,6 +144,8 @@ final class LoginViewController: UIViewController {
         xPWButton.isHidden = isEmpty
     }
     
+    //MARK: - lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
