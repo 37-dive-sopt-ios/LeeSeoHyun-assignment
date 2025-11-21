@@ -33,7 +33,7 @@ final class TabBarController: UITabBarController {
         
         let shoppingVC = ShoppingViewController()
         shoppingVC.tabBarItem = UITabBarItem(
-            title: "장보기.쇼핑",
+            title: "서버",
             image: UIImage.icon1.withRenderingMode(.alwaysTemplate),
             selectedImage: UIImage.icon1.withRenderingMode(.alwaysTemplate)
         )

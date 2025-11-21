@@ -215,6 +215,8 @@
 		};
 		611C43EA2EACEED3005C2748 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 611C43D62EACEECF005C2748 /* Sopt_assignment */;
+			baseConfigurationReferenceRelativePath = Network/Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -279,6 +281,8 @@
 		};
 		611C43EB2EACEED3005C2748 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 611C43D62EACEECF005C2748 /* Sopt_assignment */;
+			baseConfigurationReferenceRelativePath = Network/Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
