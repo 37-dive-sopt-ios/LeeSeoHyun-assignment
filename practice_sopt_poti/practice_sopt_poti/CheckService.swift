@@ -6,13 +6,13 @@
 //
 
 import Combine
-import CombineMoya
 import Moya
 import UIKit
 import Alamofire
 
+
 protocol CheckServiceType {
-    func getCheckTitle(id: Int) -> AnyPublisher<State, Error>
+    func getCheckTitle(id: Int) async throws -> State
 }
 
 enum CheckAPI {
@@ -48,17 +48,21 @@ extension CheckAPI: TargetType {
 }
 
 final class CheckService: CheckServiceType {
-    private let provider: MoyaProvider<CheckAPI>
+    private let provider = MoyaProvider<CheckAPI>()
     
-    init(provider: MoyaProvider<CheckAPI> = .init()) {
-        self.provider = provider
-    }
-    
-    func getCheckTitle(id: Int) -> AnyPublisher<State, Error> {
-        
-        provider.requestPublisher(.getCheck(id: id))
-            .map(State.self) //json decode가 여기서 이루어짐 (디코딩 실패 시 receiveCompletion(.failure))
-            .mapError { $0 as Error }
-            .eraseToAnyPublisher()
+    func getCheckTitle(id: Int) async throws -> State {
+        let response: Response = try await withCheckedThrowingContinuation { continuation in
+            /// withCheckedThrowingContinuation ; completion handler st 코드를 async throws 함수로 랩핑
+            provider.request(.getCheck(id: id)) { result in
+                switch result {
+                case .success(let response):
+                    continuation.resume(returning: response)
+                    ///resume ; 멈춰 있던 async 함수를 다시 실행
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+        return try response.map(State.self)
     }
 }

@@ -50,22 +50,23 @@ final class CheckViewModel{
     }
     
     private func handleGetCheckTitle(id: Int) {
-        print("🥹 request id:", id)
-        checkServiceType.getCheckTitle(id: id)
-            .sink(
-                receiveCompletion: { [weak self] completion in
-                    print("👊 completion:", completion)
-                    if case .failure(let error) = completion {
-                        self?.output.send(.fetchCheckDidFail(error: error))
-                    }
-                },
-                receiveValue: { [weak self] state in
-                    print("✅ title:", state.title)
-                    self?.output.send(.fetchCheckDidSucceed(state: state))
-                })
-            .store(in: &cancellables)
+        Task { [weak self] in
+            guard let self else { return }
+            
+            do {
+                let state = try await checkServiceType.getCheckTitle(id: id)
+                
+                await MainActor.run {
+                    self.output.send(.fetchCheckDidSucceed(state: state))
+                }
+                
+            } catch {
+                await MainActor.run {
+                    self.output.send(.fetchCheckDidFail(error: error))
+                }
+            }
+        }
     }
-    
 }
 
 struct State: Decodable {
@@ -75,3 +76,19 @@ struct State: Decodable {
     let body: String
 }
 
+//private func handleGetCheckTitle(id: Int) {
+//    print("🥹 request id:", id)
+//    checkServiceType.getCheckTitle(id: id)
+//        .sink(
+//            receiveCompletion: { [weak self] completion in
+//                print("👊 completion:", completion)
+//                if case .failure(let error) = completion {
+//                    self?.output.send(.fetchCheckDidFail(error: error))
+//                }
+//            },
+//            receiveValue: { [weak self] state in
+//                print("✅ title:", state.title)
+//                self?.output.send(.fetchCheckDidSucceed(state: state))
+//            })
+//        .store(in: &cancellables)
+//}
