@@ -1,5 +1,5 @@
 //
-//  ManageViewController.swift
+//  CheckViewController.swift
 //  practice_sopt_poti
 //
 //  Created by 이서현 on 1/8/26.
@@ -9,6 +9,11 @@ import Combine
 import UIKit
 
 final class CheckViewModel{
+    private let checkServiceType: CheckServiceType
+    
+    init(checkServiceType: CheckServiceType = CheckService()) {
+        self.checkServiceType = checkServiceType
+    }
     
     enum Input {
         case viewDidAppear
@@ -25,7 +30,7 @@ final class CheckViewModel{
     private(set) var output: PassthroughSubject<Output, Never> = .init()
     
     func transform(input: AnyPublisher<Input, Never>) -> AnyPublisher<Output, Never> {
-        <#code#>
+        return output.eraseToAnyPublisher()
     }
     
     

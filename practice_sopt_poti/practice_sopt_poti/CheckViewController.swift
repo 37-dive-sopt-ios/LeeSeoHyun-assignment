@@ -1,5 +1,5 @@
 //
-//  ManageViewController.swift
+//  CheckViewController.swift
 //  practice_sopt_poti
 //
 //  Created by 이서현 on 1/8/26.
@@ -14,7 +14,9 @@ import Then
 final class ManageViewController: BaseViewController {
 
     private let checkButton = UIButton()
+    private let checkLabel = UILabel()
     
+    private let viewModel = CheckViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
