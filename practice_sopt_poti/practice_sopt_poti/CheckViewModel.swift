@@ -11,13 +11,14 @@ import UIKit
 final class CheckViewModel{
     private let checkServiceType: CheckServiceType
     
+    
     init(checkServiceType: CheckServiceType = CheckService()) {
         self.checkServiceType = checkServiceType
     }
     
     enum Input {
         case viewDidAppear
-        case checkButtonTapped
+        case checkButtonDidTap
     }
     
     enum Output {
@@ -28,34 +29,50 @@ final class CheckViewModel{
     
     private(set) var cancellables = Set<AnyCancellable>()
     private(set) var output: PassthroughSubject<Output, Never> = .init()
+    private var postId: Int = 1
     
     func transform(input: AnyPublisher<Input, Never>) -> AnyPublisher<Output, Never> {
+        input
+            .sink { [weak self] event in
+                guard let self else { return }
+                switch event {
+                case .viewDidAppear:
+                    self.handleGetCheckTitle(id: self.postId)
+
+                case .checkButtonDidTap:
+                    self.postId += 1
+                    self.handleGetCheckTitle(id: self.postId)
+                }
+            }
+            .store(in: &cancellables)
+
         return output.eraseToAnyPublisher()
     }
     
+    private func handleGetCheckTitle(id: Int) {
+        print("🥹 request id:", id)
+        checkServiceType.getCheckTitle(id: id)
+            .sink(
+                receiveCompletion: { [weak self] completion in
+                    print("👊 completion:", completion)
+                    if case .failure(let error) = completion {
+                        self?.output.send(.fetchCheckDidFail(error: error))
+                    }
+                },
+                receiveValue: { [weak self] state in
+                    print("✅ title:", state.title)
+                    self?.output.send(.fetchCheckDidSucceed(state: state))
+                })
+            .store(in: &cancellables)
+    }
     
 }
 
-protocol CheckServiceType {
-    func getCheckTitle() -> AnyPublisher<State, Error>
-}
 
-class CheckService: CheckServiceType {
-    func getCheckTitle() -> AnyPublisher<State, Error> {
-        let url = URL(string: "https://jsonplaceholder.typicode.com")!
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .catch { error in
-                return Fail(error: error).eraseToAnyPublisher()
-            }.map({ $0.data })
-            .decode(type: State.self, decoder: JSONDecoder())
-            .eraseToAnyPublisher()
-    }
-}
-
-
-enum State: Decodable {
-    case checked
-    case checking
-    case notChecked
+struct State: Decodable {
+    let userId: Int
+    let id: Int
+    let title: String
+    let body: String
 }
 
