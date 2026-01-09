@@ -68,7 +68,6 @@ final class CheckViewModel{
     
 }
 
-
 struct State: Decodable {
     let userId: Int
     let id: Int

@@ -38,7 +38,6 @@ extension CheckAPI: TargetType {
         }
     }
     
-    
     var task: Task {
         return .requestPlain
     }
@@ -55,21 +54,11 @@ final class CheckService: CheckServiceType {
         self.provider = provider
     }
     
-    
-    
     func getCheckTitle(id: Int) -> AnyPublisher<State, Error> {
         
         provider.requestPublisher(.getCheck(id: id))
-            .map(State.self)
+            .map(State.self) //json decode가 여기서 이루어짐 (디코딩 실패 시 receiveCompletion(.failure))
             .mapError { $0 as Error }
             .eraseToAnyPublisher()
-        
-//        let url = URL(string: "https://jsonplaceholder.typicode.com")!
-//        return URLSession.shared.dataTaskPublisher(for: url)
-//            .catch { error in
-//                return Fail(error: error).eraseToAnyPublisher()
-//            }.map({ $0.data })
-//            .decode(type: State.self, decoder: JSONDecoder())
-//            .eraseToAnyPublisher()
     }
 }
