@@ -136,12 +136,4 @@ final class CheckViewController: BaseViewController {
         currentRating = latest
         print("saved rating = \(String(format: "%.1f", currentRating))")
     }
-    
-    /*
-    @objc
-    private func checkButtonDidTap() {
-        let vc = ManageListViewController()
-        navigationController?.pushViewController(vc, animated: true)
-    }
-     */
 }
