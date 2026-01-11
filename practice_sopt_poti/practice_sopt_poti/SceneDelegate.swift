@@ -19,7 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       // 2.
         let window = UIWindow(windowScene: windowScene)
       // 3.
-        let vc = UINavigationController(rootViewController: CheckViewController())
+        let checkVC = AppDIContainer.shared.makeCheckViewController() //잘 모르겠어요..
+        let vc = UINavigationController(rootViewController: checkVC)
       // 4.
         window.rootViewController = vc
       // 5.
@@ -58,4 +59,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-

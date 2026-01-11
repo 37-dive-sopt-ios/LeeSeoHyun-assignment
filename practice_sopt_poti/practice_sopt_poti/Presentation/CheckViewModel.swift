@@ -9,11 +9,10 @@ import Combine
 import UIKit
 
 final class CheckViewModel{
-    private let checkServiceType: CheckServiceType
-    
-    
-    init(checkServiceType: CheckServiceType = CheckService()) {
-        self.checkServiceType = checkServiceType
+    private let checkUseCase: CheckUseCase
+
+    init(checkUseCase: CheckUseCase) {
+        self.checkUseCase = checkUseCase
     }
     
     enum Input {
@@ -25,7 +24,7 @@ final class CheckViewModel{
     
     enum Output {
         case fetchCheckDidFail(error: Error)
-        case fetchCheckDidSucceed(state: State)
+        case fetchCheckDidSucceed(entity: CheckEntity)
         case enableButton(isEnabled: Bool)
         case renderRating(rating: Double, isButtonEnabled: Bool)
     }
@@ -33,7 +32,9 @@ final class CheckViewModel{
     private(set) var cancellables = Set<AnyCancellable>()
     private(set) var output: PassthroughSubject<Output, Never> = .init()
     private var postId: Int = 1
-    private var currentRating: Double = 0.0
+    private var currentRating: Double = 0.5
+    private let minRating: Double = 0.5
+    private let maxRating: Double = 5.0
     
     func transform(input: AnyPublisher<Input, Never>) -> AnyPublisher<Output, Never> {
         input
@@ -41,36 +42,34 @@ final class CheckViewModel{
                 guard let self else { return }
                 switch event {
                 case .viewDidAppear:
-                    self.handleGetCheckTitle(id: self.postId)
-
+                    self.handleCheck(id: self.postId)
                 case .checkButtonDidTap:
                     self.postId += 1
-                    self.handleGetCheckTitle(id: self.postId)
-                
+                    self.handleCheck(id: self.postId)
                 case .ratingChanged(let rating):
-                    self.currentRating = currentRating
-                    self.output.send(.renderRating(rating: currentRating, isButtonEnabled: rating > 0))
+                    let clamped = min(max(rating, self.minRating), self.maxRating)
+                    self.currentRating = clamped
+                    self.output.send(.renderRating(rating: clamped, isButtonEnabled: clamped >= self.minRating))
                 case .ratingFinished(let rating):
-                    self.currentRating
-                    self.output.send(.renderRating(rating: currentRating, isButtonEnabled: rating > 0))
+                    let clamped = min(max(rating, self.minRating), self.maxRating)
+                    self.currentRating = clamped
+                    self.output.send(.renderRating(rating: clamped, isButtonEnabled: clamped >= self.minRating))
                 }
             }
             .store(in: &cancellables)
 
         return output.eraseToAnyPublisher()
     }
-    
-    private func handleGetCheckTitle(id: Int) {
+
+    private func handleCheck(id: Int) {
         Task { [weak self] in
             guard let self else { return }
-            
+
             do {
-                let state = try await checkServiceType.getCheckTitle(id: id)
-                
+                let entity = try await checkUseCase.check(id: id)
                 await MainActor.run {
-                    self.output.send(.fetchCheckDidSucceed(state: state))
+                    self.output.send(.fetchCheckDidSucceed(entity: entity))
                 }
-                
             } catch {
                 await MainActor.run {
                     self.output.send(.fetchCheckDidFail(error: error))
@@ -78,12 +77,5 @@ final class CheckViewModel{
             }
         }
     }
-}
-
-struct State: Decodable {
-    let userId: Int
-    let id: Int
-    let title: String
-    let body: String
 }
 

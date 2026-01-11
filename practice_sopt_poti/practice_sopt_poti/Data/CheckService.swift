@@ -12,7 +12,14 @@ import Alamofire
 
 
 protocol CheckServiceType {
-    func getCheckTitle(id: Int) async throws -> State
+    func getCheckTitle(id: Int) async throws -> CheckDTO
+}
+
+struct CheckDTO: Decodable {
+    let userId: Int
+    let id: Int
+    let title: String
+    let body: String
 }
 
 enum CheckAPI {
@@ -50,7 +57,7 @@ extension CheckAPI: TargetType {
 final class CheckService: CheckServiceType {
     private let provider = MoyaProvider<CheckAPI>()
     
-    func getCheckTitle(id: Int) async throws -> State {
+    func getCheckTitle(id: Int) async throws -> CheckDTO {
         let response: Response = try await withCheckedThrowingContinuation { continuation in
             /// withCheckedThrowingContinuation ; completion handler st 코드를 async throws 함수로 랩핑
             provider.request(.getCheck(id: id)) { result in
@@ -63,6 +70,7 @@ final class CheckService: CheckServiceType {
                 }
             }
         }
-        return try response.map(State.self)
+        return try response.map(CheckDTO.self)
     }
 }
+

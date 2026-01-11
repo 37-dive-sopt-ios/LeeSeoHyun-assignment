@@ -16,7 +16,7 @@ import Then
 final class CheckViewController: BaseViewController {
 
     
-    private let viewModel = CheckViewModel()
+    private let viewModel: CheckViewModel
     private let input: PassthroughSubject<CheckViewModel.Input, Never> = .init()
     private var cancellables = Set<AnyCancellable>()
     
@@ -25,6 +25,15 @@ final class CheckViewController: BaseViewController {
     private var ratingView = CosmosView()
     private let saveStarButton = UIButton()
     private var currentRating: Double = 0.0
+    
+    init(viewModel: CheckViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,8 +109,8 @@ final class CheckViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] event in
                 switch event {
-                case .fetchCheckDidSucceed(let state):
-                    self?.checkLabel.text = state.title
+                case .fetchCheckDidSucceed(let entity):
+                    self?.checkLabel.text = entity.title
                 case .fetchCheckDidFail(let error):
                     self?.checkLabel.text = error.localizedDescription
                 case .enableButton(let isEnabled):
